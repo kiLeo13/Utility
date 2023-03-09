@@ -1,0 +1,19 @@
+name: Utility
+version: '${project.version}'
+main: kileo.utility.Utility
+api-version: 1.19
+authors: [Leo13]
+description: A plugin for general purposes.
+depend: [ ProtocolLib ]
+commands:
+  fly:
+    description: Makes players fly.
+    usage: /<command> [player]
+    permission: utility.fly
+permissions:
+  utility.fly:
+    description: Allows players to use fly command on themselves.
+    default: op
+  utility.fly.others:
+    description: Allows players to use fly command on other players.
+    default: op
