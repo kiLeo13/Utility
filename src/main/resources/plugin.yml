@@ -13,6 +13,10 @@ commands:
     description: Makes people invunerable.
     usage: /<command> [player]
     permission: utility.god
+  randomhotbar:
+    description: Makes others' slot main hand completely random.
+    usage: /<command> <player> <duration> <frequency>
+    permission: utility.randomize.hotbar
 permissions:
   utility.fly:
     description: Allows players to use fly command on themselves.
@@ -30,3 +34,6 @@ permissions:
     default: op
     children:
       - utility.god
+  utility.randomize.hotbar:
+    description: Allows players to randomize others' current item in main hand.
+    default: op

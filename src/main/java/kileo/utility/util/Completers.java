@@ -16,7 +16,8 @@ public class Completers {
 
     private Completers() {}
 
-    public static List<String> suggestPlayers(String arg, boolean includeOffline, boolean includeHelp) {
+    public static List<String> suggestPlayers(String arg, boolean includeOffline, boolean includeEveryone, boolean includeHelp) {
+        updatePlayers();
         List<String> suggest = new ArrayList<>();
 
         if (includeOffline) {
@@ -26,14 +27,26 @@ public class Completers {
         }
 
         if (includeHelp) suggest.add("help");
+        if (includeEveryone) suggest.add("*");
 
         return suggest.stream()
-                .filter(i -> i.toLowerCase(Locale.ROOT)
-                .startsWith(arg))
+                .filter(i -> i.toLowerCase(Locale.ROOT).startsWith(arg.toLowerCase()))
                 .collect(Collectors.toList());
     }
 
-    private void updatePlayers() {
+    public static List<String> suggestNumbers(int starting, int ending, String arg) {
+        List<String> suggestion = new ArrayList<>();
+        int i = starting;
+
+        for (; i <= ending; i++)
+            suggestion.add(String.valueOf(i));
+
+        return suggestion.stream()
+                .filter(f -> f.startsWith(arg))
+                .collect(Collectors.toList());
+    }
+
+    private static void updatePlayers() {
         onlinePlayers = Bukkit.getOnlinePlayers();
         offlinePlayers = Bukkit.getOfflinePlayers();
     }

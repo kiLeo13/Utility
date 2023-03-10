@@ -4,7 +4,6 @@ import kileo.utility.util.Completers;
 import kileo.utility.util.Message;
 import kileo.utility.util.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Fly implements TabExecutor {
@@ -50,9 +50,23 @@ public class Fly implements TabExecutor {
 
         /* Fly Others */
         if (args.length == 1) {
-            OfflinePlayer offTarget = Bukkit.getOfflinePlayer(args[0]);
+            if (args[0].equalsIgnoreCase("*")) {
+                Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
-            if (offTarget.getPlayer() == null) {
+                players.forEach(player -> {
+                    boolean canFly = player.getAllowFlight();
+
+                    player.sendRichMessage(flyMessage(player));
+                    player.setAllowFlight(!canFly);
+                });
+
+                sender.sendRichMessage("<green>Toggled fly for every online player!");
+                return true;
+            }
+
+            Player target = Bukkit.getPlayer(args[0]);
+
+            if (target == null) {
                 sender.sendRichMessage(Message.ERROR_PLAYER_NOT_FOUND.get());
                 return true;
             }
@@ -62,7 +76,6 @@ public class Fly implements TabExecutor {
                 return true;
             }
 
-            Player target = offTarget.getPlayer();
             boolean targetCanFly = target.getAllowFlight();
 
             target.setAllowFlight(!targetCanFly);
@@ -76,7 +89,7 @@ public class Fly implements TabExecutor {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 1) return Completers.suggestPlayers(args[0], false, true);
+        if (args.length == 1) return Completers.suggestPlayers(args[0], false, true, true);
 
         return new ArrayList<>();
     }
