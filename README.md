@@ -14,10 +14,24 @@ A plugin that does some cool stuff and has some cool features :3
 >
 > This plugin is based in the Paper API so may not work properly on Spigot/Bukkit servers.
 
+## Commands
+
+`/god`
+- Allows players to be invunerable.
+
+`/fly`
+- Allows players to enable/disable fly regardless the gamemode (Never do it in spectator mode).
+
+`/randomhotbar`
+- Allows players to randomize others' item in main hand MANY MANY TIMES.
+
 ## Permissions
 
-`utility.fly`
-- Allows players to use the fly command.
+`utility.fly` <b>|</b> `utility.fly.all`
+- Allows players to use the fly command to themselves or other players.
 
-`utility.fly.others`
+`utility.god` <b>|</b> `utility.god.all`
 - Allows players to use the fly command to other players.
+
+`utility.randomize.hotbar` <b>|</b> `utility.randomize.hotbar.all`
+- Allows players to randomize players' item in main hand.

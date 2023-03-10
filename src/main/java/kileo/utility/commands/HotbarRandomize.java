@@ -3,6 +3,7 @@ package kileo.utility.commands;
 import kileo.utility.Utility;
 import kileo.utility.util.Completers;
 import kileo.utility.util.Message;
+import kileo.utility.util.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,9 +21,7 @@ import java.util.List;
 public class HotbarRandomize implements TabExecutor {
     private final Utility plugin;
 
-    public HotbarRandomize(Utility plugin) {
-        this.plugin = plugin;
-    }
+    public HotbarRandomize(Utility plugin) { this.plugin = plugin; }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -34,6 +33,11 @@ public class HotbarRandomize implements TabExecutor {
 
         if (args.length != 3 || args[0].equalsIgnoreCase("help")) {
             sender.sendRichMessage(Message.HELP_COMMAND_HOTBAR_RANDOMIZE.get());
+            return true;
+        }
+
+        if (args[0].equals("*") && !sender.hasPermission(Permission.COMMAND_HOTBAR_RANDOMIZE_ALL.get())) {
+            sender.sendRichMessage(Message.ERROR_COMMAND_NO_PERMISSION.get());
             return true;
         }
 

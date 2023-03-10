@@ -50,6 +50,11 @@ public class Fly implements TabExecutor {
 
         /* Fly Others */
         if (args.length == 1) {
+            if (!sender.hasPermission(Permission.COMMAND_FLY_ALL.get()) && !args[0].equals(sender.getName())) {
+                sender.sendRichMessage(Message.ERROR_COMMAND_NO_PERMISSION.get());
+                return true;
+            }
+
             if (args[0].equalsIgnoreCase("*")) {
                 Collection<? extends Player> players = Bukkit.getOnlinePlayers();
 
@@ -68,11 +73,6 @@ public class Fly implements TabExecutor {
 
             if (target == null) {
                 sender.sendRichMessage(Message.ERROR_PLAYER_NOT_FOUND.get());
-                return true;
-            }
-
-            if (!sender.hasPermission(Permission.COMMAND_FLY_ALL.get()) && !args[0].equals(sender.getName())) {
-                sender.sendRichMessage(Message.ERROR_COMMAND_NO_PERMISSION.get());
                 return true;
             }
 

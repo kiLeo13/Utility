@@ -37,3 +37,8 @@ permissions:
   utility.randomize.hotbar:
     description: Allows players to randomize others' current item in main hand.
     default: op
+  utility.randomize.hotbar.all:
+    description: Allows to randomize everyone's current item in main hand.
+    default: op
+    children:
+      - utility.randomize.hotbar
