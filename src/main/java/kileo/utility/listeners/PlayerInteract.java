@@ -1,4 +1,4 @@
-package kileo.utility;
+package kileo.utility.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

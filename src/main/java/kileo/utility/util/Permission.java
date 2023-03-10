@@ -1,7 +1,7 @@
 package kileo.utility.util;
 
 public enum Permission {
-    COMMAND_FLY("utility.fly");
+    COMMAND_FLY_OTHERS("utility.fly.others");
 
     final String permission;
 
