@@ -16,8 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Fly implements TabExecutor {
-
+public class God implements TabExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
@@ -26,7 +25,7 @@ public class Fly implements TabExecutor {
             return true;
         }
 
-        /* Fly yourself */
+        /* God yourself */
         if (args.length == 0) {
             if (!(sender instanceof Player)) {
                 sender.sendRichMessage(Message.COMMAND_SENDER_NOT_ALLOWED.get());
@@ -34,21 +33,20 @@ public class Fly implements TabExecutor {
             }
 
             Player player = (Player) sender;
-            boolean canFly = player.getAllowFlight();
+            boolean isGod = player.isInvulnerable();
 
-            player.setAllowFlight(!canFly);
-
-            player.sendRichMessage(flyMessage(player));
+            player.setInvulnerable(!isGod);
+            player.sendRichMessage(godMessage(player));
 
             return true;
         }
 
         if (args[0].equalsIgnoreCase("help")) {
-            sender.sendRichMessage(Message.HELP_COMMAND_FLY.get());
+            sender.sendRichMessage(Message.HELP_COMMAND_GOD.get());
             return true;
         }
 
-        /* Fly Others */
+        /* God Others */
         if (args.length == 1) {
             OfflinePlayer offTarget = Bukkit.getOfflinePlayer(args[0]);
 
@@ -57,18 +55,18 @@ public class Fly implements TabExecutor {
                 return true;
             }
 
-            if (!sender.hasPermission(Permission.COMMAND_FLY_ALL.get()) && !args[0].equals(sender.getName())) {
+            if (!sender.hasPermission(Permission.COMMAND_GOD_ALL.get()) && !args[0].equals(sender.getName())) {
                 sender.sendRichMessage(Message.ERROR_COMMAND_NO_PERMISSION.get());
                 return true;
             }
 
             Player target = offTarget.getPlayer();
-            boolean targetCanFly = target.getAllowFlight();
+            boolean isGod = target.isInvulnerable();
 
-            target.setAllowFlight(!targetCanFly);
+            target.setInvulnerable(!isGod);
 
-            target.sendRichMessage(targetFlyMessage(target));
-            sender.sendRichMessage(senderFlyMessage(target));
+            target.sendRichMessage(targetGodMessage(target));
+            sender.sendRichMessage(senderGodMessage(target));
         }
 
         return true;
@@ -81,21 +79,21 @@ public class Fly implements TabExecutor {
         return new ArrayList<>();
     }
 
-    private String flyMessage(Player player) {
-        return player.getAllowFlight()
-                ? "<green>Fly has been enabled."
-                : "<red>Fly has been disabled.";
+    private String godMessage(Player player) {
+        return player.isInvulnerable()
+                ? "<green>God has been enabled."
+                : "<red>God has been disabled.";
     }
 
-    private String targetFlyMessage(Player target) {
-        return target.getAllowFlight()
-                ? "<green>Fly has been enabled."
-                : "<red>Fly has been disabled";
+    private String targetGodMessage(Player target) {
+        return target.isInvulnerable()
+                ? "<green>God has been enabled."
+                : "<red>God has been disabled";
     }
 
-    private String senderFlyMessage(Player target) {
-        return target.getAllowFlight()
-                ? "<green>Fly for <gold>" + target.getName() + "<green> has been enabled."
-                : "<red>Fly for <gold>" + target.getName() + "<red> has been disabled.";
+    private String senderGodMessage(Player target) {
+        return target.isInvulnerable()
+                ? "<green>God for <gold>" + target.getName() + "<green> has been enabled."
+                : "<red>God for <gold>" + target.getName() + "<red> has been disabled";
     }
 }

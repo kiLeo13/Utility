@@ -9,12 +9,24 @@ commands:
     description: Makes players fly.
     usage: /<command> [player]
     permission: utility.fly
+  god:
+    description: Makes people invunerable.
+    usage: /<command> [player]
+    permission: utility.god
 permissions:
   utility.fly:
     description: Allows players to use fly command on themselves.
     default: op
-  utility.fly.others:
-    description: Allows players to use fly command on other players.
+  utility.fly.all:
+    description: Allows players to use fly command on everyone.
     default: op
     children:
       - utility.fly
+  utility.god:
+    description: Allows players to use god command on themselves.
+    default: op
+  utility.god.all:
+    description: Allows players to use god command on everyone.
+    default: op
+    children:
+      - utility.god
